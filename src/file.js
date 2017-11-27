@@ -6,7 +6,19 @@ const fs = require('fs');
 var file = {}
 
 file.writeFile = function(p, callback) {
-	var url = utils.resolve(config.folder + config.name + '.txt');
+	var folder = utils.resolve(config.folder);
+	fs.access(folder, fs.constants.R_OK | fs.constants.W_OK, function(e) {
+		if (e) {
+			fs.mkdir(folder, function() {
+				file.write(p, callback);
+			})
+		} else {
+			file.write(p, callback);
+		}
+	});
+}
+file.write = function(p, callback) {
+	var url = utils.resolve(config.folder + '/' + config.name + '.txt');
 	if (fs.existsSync(url)) {
 		fs.appendFileSync(url, '\r\n' + p + '\r\n');
 		callback && callback();
@@ -15,5 +27,4 @@ file.writeFile = function(p, callback) {
 		callback && callback();
 	}
 }
-
 module.exports = file;
