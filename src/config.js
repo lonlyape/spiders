@@ -1,5 +1,5 @@
 const config = {
-	href: 'http://www.qtshu.com/xinghedadi/',
+	href: 'https://www.qtshu.la/xinghedadi/',
 	name: '星河大帝',
 	folder: 'novel',
 };

@@ -1,10 +1,19 @@
-const http = require('http');
 const cheerio = require('cheerio');
 const config = require('./config.js');
 const file = require('./file.js');
 
+function http() {
+	var http;
+	if (/^(https)/.test(config.href)) {
+		http = require('https');
+	} else {
+		http = require('http');
+	}
+	return http;
+}
+
 function getHttp(filePath, callback) {
-	http.get(config.href + filePath, function(res) {
+	http().get(config.href + filePath, function(res) {
 		var html = '';
 		res.setEncoding('utf-8');
 
@@ -35,7 +44,7 @@ function getHttp(filePath, callback) {
 }
 
 function getUrl() {
-	http.get(config.href + 'index.html', function(res) {
+	http().get(config.href + 'index.html', function(res) {
 		var html = '';
 		res.setEncoding('utf-8');
 
